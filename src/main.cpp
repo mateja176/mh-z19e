@@ -317,7 +317,8 @@ SoftwareSerial softwareSerial(RX_PIN, TX_PIN);
 
 MHZ19 mhz19;
 
-unsigned long msSinceMeasurement = 0;
+// guarantees that a measurement will be taken when loop is first called
+long msSinceMeasurement = -1 * MEASUREMENT_INTERVAL_MS;
 
 void setup()
 {
@@ -439,7 +440,7 @@ void loop()
 
   pubSubClient.loop();
 
-  if ((millis() - msSinceMeasurement) >= MEASUREMENT_INTERVAL_MS || msSinceMeasurement == 0)
+  if ((millis() - msSinceMeasurement) >= MEASUREMENT_INTERVAL_MS)
   {
     if (pubSubClient.state() != MQTT_CONNECTED)
     {
