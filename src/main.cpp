@@ -317,7 +317,7 @@ SoftwareSerial softwareSerial(RX_PIN, TX_PIN);
 
 MHZ19 mhz19;
 
-unsigned long elapsedMs = 0;
+unsigned long msSinceMeasurement = 0;
 
 void setup()
 {
@@ -439,13 +439,13 @@ void loop()
 
   pubSubClient.loop();
 
-  if (millis() - elapsedMs >= 2000)
+  if (millis() - msSinceMeasurement >= MEASUREMENT_INTERVAL_MS)
   {
     if (pubSubClient.state() != MQTT_CONNECTED)
     {
       return;
     }
-    elapsedMs = millis();
+    msSinceMeasurement = millis();
     const int co2Ppm = mhz19.getCO2();
     Serial.print("CO2 (ppm): ");
     Serial.println(co2Ppm);

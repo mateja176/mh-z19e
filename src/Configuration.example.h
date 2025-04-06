@@ -7,7 +7,7 @@ const char *VERSION = "0.0.1";
 
 /* WiFi */
 
-const unsigned long WIFI_DELAY_MS = 4000;
+const unsigned long WIFI_DELAY_MS = 5000;
 const unsigned long AP_THRESHOLD_MS = 4000;
 
 /* PubSub */
@@ -23,3 +23,4 @@ const unsigned long PUBSUB_DELAY_MS = 2000;
 
 const uint8_t TX_PIN = D1;
 const uint8_t RX_PIN = D2;
+const uint8_t MEASUREMENT_INTERVAL_MS = 2000;
