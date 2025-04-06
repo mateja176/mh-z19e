@@ -454,7 +454,7 @@ void loop()
     Serial.println(tempC);
     char name[nameMaxLength];
     setName(name);
-    String topic = String(name[0] == 0 ? NAME : name) + "/" + String(TOPIC_INPUT);
+    String topic = String(name[0] == 0 ? NAME : name) + "/" + String(TOPIC_MEASURE);
     StaticJsonDocument<32> response;
     response["co2"] = co2Ppm;
     response["temp"] = tempC;

@@ -16,7 +16,7 @@ const IPAddress PUBSUB_BROKER_IP_ADDRESS = {192, 168, 1, 18};
 const unsigned int PUBSUB_PORT = 1883;
 const char *PUBSUB_USER = NULL;
 const char *PUBSUB_PW = NULL;
-const char *TOPIC_INPUT = "input";
+const char *TOPIC_MEASURE = "measure";
 const unsigned long PUBSUB_DELAY_MS = 2000;
 
 /* Hardware */
