@@ -439,7 +439,7 @@ void loop()
 
   pubSubClient.loop();
 
-  if (millis() - msSinceMeasurement >= MEASUREMENT_INTERVAL_MS)
+  if ((millis() - msSinceMeasurement) >= MEASUREMENT_INTERVAL_MS || msSinceMeasurement == 0)
   {
     if (pubSubClient.state() != MQTT_CONNECTED)
     {
