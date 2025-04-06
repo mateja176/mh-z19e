@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <Configuration.h>
 #include <EEPROM.h>
 #include <ESP8266HTTPUpdateServer.h>
@@ -451,5 +452,14 @@ void loop()
     const float tempC = mhz19.getTemperature();
     Serial.print("Temperature (C): ");
     Serial.println(tempC);
+    char name[nameMaxLength];
+    setName(name);
+    String topic = String(name[0] == 0 ? NAME : name) + "/" + String(TOPIC_INPUT);
+    StaticJsonDocument<32> response;
+    response["co2"] = co2Ppm;
+    response["temp"] = tempC;
+    char payload[32];
+    serializeJson(response, payload);
+    pubSubClient.publish(topic.c_str(), payload);
   }
 }
