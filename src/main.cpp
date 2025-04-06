@@ -397,12 +397,12 @@ void loop()
       wifiAP();
       return;
     }
-    if (wifiStatus == WL_IDLE_STATUS || wifiStatus == WL_SCAN_COMPLETED || wifiStatus == WL_NO_SSID_AVAIL)
+    if (wifiStatus == WL_IDLE_STATUS || wifiStatus == WL_SCAN_COMPLETED || wifiStatus == WL_NO_SSID_AVAIL || wifiStatus == WL_DISCONNECTED)
     {
       Serial.println("wifi(status): connecting");
       return;
     }
-    if (wifiStatus == WL_CONNECT_FAILED || wifiStatus == WL_CONNECTION_LOST || wifiStatus == WL_DISCONNECTED)
+    if (wifiStatus == WL_CONNECT_FAILED || wifiStatus == WL_CONNECTION_LOST)
     {
       Serial.println("wifi(status): " + String(wifiStatus));
       char ssid[ssidMaxLength];
