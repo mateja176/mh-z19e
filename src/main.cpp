@@ -90,7 +90,8 @@ void wifiAP()
   WiFi.softAP(name[0] == 0 ? NAME : name);
 
   IPAddress ip = WiFi.softAPIP();
-  Serial.println("wifi(ip): " + ip.toString());
+  Serial.print("wifi(ip): ");
+  Serial.println(ip.toString());
 }
 
 ESP8266WebServer server(80);
@@ -226,9 +227,15 @@ void handleSetCredentials()
     }
     pw[i] = c;
   }
-  Serial.println("server(credentials/name): " + String(name) + ", " + String(nameLength));
-  Serial.println("server(credentials/ssid): " + String(ssid) + ", " + String(ssidLength));
-  Serial.println("server(credentials/pw): " + String(pw) + ", " + String(pwLength));
+  Serial.print("server(credentials/name): '");
+  Serial.print(name);
+  Serial.println("'");
+  Serial.print("server(credentials/ssid): '");
+  Serial.print(ssid);
+  Serial.println("'");
+  Serial.print("server(credentials/pw): '");
+  Serial.print(pw);
+  Serial.println("'");
 
   WiFi.hostname(name);
 
@@ -343,9 +350,15 @@ void setup()
   char pw[pwMaxLength];
   setSsid(ssid);
   setPw(pw);
-  Serial.println("eeprom(name): '" + String(name) + "'");
-  Serial.println("eeprom(ssid): '" + String(ssid) + "'");
-  Serial.println("eeprom(pw): '" + String(pw) + "'");
+  Serial.print("eeprom(name): '");
+  Serial.print(name);
+  Serial.println("'");
+  Serial.print("eeprom(ssid): '");
+  Serial.print(ssid);
+  Serial.println("'");
+  Serial.print("eeprom(pw): '");
+  Serial.print(pw);
+  Serial.println("'");
   const bool noCredentials = ssid[0] == 0 || pw[0] == 0;
   if (noCredentials)
   {
@@ -364,10 +377,12 @@ void setup()
   pubSubClient.setServer(PUBSUB_BROKER_IP_ADDRESS, PUBSUB_PORT);
   if (WiFi.getMode() == WIFI_STA && WiFi.status() == WL_CONNECTED)
   {
-    Serial.println("wifi(ip): " + WiFi.localIP().toString());
+    Serial.print("wifi(ip): ");
+    Serial.println(WiFi.localIP().toString());
     const bool connected = pubSubConnect();
     const String status = connected ? "connected" : "disconnected";
-    Serial.println("pubsub(connection): " + status);
+    Serial.print("pubsub(connection): ");
+    Serial.println(status);
   }
 
   httpUpdater.setup(&server);
@@ -422,7 +437,8 @@ void loop()
     }
     if (wifiStatus == WL_CONNECT_FAILED || wifiStatus == WL_CONNECTION_LOST)
     {
-      Serial.println("wifi(status): " + String(wifiStatus));
+      Serial.print("wifi(status): ");
+      Serial.println(wifiStatus);
       char ssid[ssidMaxLength];
       char pw[pwMaxLength];
       setSsid(ssid);
@@ -443,12 +459,14 @@ void loop()
     }
     if (pubSubState == MQTT_CONNECT_BAD_PROTOCOL || pubSubState == MQTT_CONNECT_BAD_CLIENT_ID || pubSubState == MQTT_CONNECT_BAD_CREDENTIALS || pubSubState == MQTT_CONNECT_UNAUTHORIZED)
     {
-      Serial.println("pubsub(state): " + String(pubSubState));
+      Serial.print("pubsub(state): ");
+      Serial.println(pubSubState);
       return;
     }
     if (pubSubState == MQTT_CONNECTION_TIMEOUT || pubSubState == MQTT_CONNECTION_LOST || pubSubState == MQTT_CONNECT_FAILED || pubSubState == MQTT_DISCONNECTED || pubSubState == MQTT_CONNECT_UNAVAILABLE)
     {
-      Serial.println("pubsub(state): " + String(pubSubState));
+      Serial.print("pubsub(state): ");
+      Serial.println(pubSubState);
       pubSubConnect();
       return;
     }
