@@ -21,6 +21,8 @@ const unsigned long PUBSUB_DELAY_MS = 2000;
 
 /* Hardware */
 
+const uint8_t INPUT_PIN = D4;
+const unsigned long INPUT_DEBOUNCE_MS = 250;
 const uint8_t TX_PIN = D1;
 const uint8_t RX_PIN = D2;
 const uint8_t MEASUREMENT_INTERVAL_MS = 2000;

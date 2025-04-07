@@ -8,6 +8,12 @@
 #include <PubSubClient.h>
 #include <SoftwareSerial.h>
 
+unsigned long fallingStartMs = 0;
+void IRAM_ATTR handleInputFalling()
+{
+  fallingStartMs = millis();
+}
+
 #pragma region eeprom
 const byte eepromSize = 128;
 const byte nameMinLength = 2;
@@ -324,6 +330,10 @@ void setup()
 {
   Serial.begin(115200);
 
+  pinMode(INPUT_PIN, INPUT_PULLUP);
+  int interruptPin = digitalPinToInterrupt(INPUT_PIN);
+  attachInterrupt(interruptPin, handleInputFalling, FALLING);
+
   EEPROM.begin(eepromSize);
 
   char name[nameMaxLength];
@@ -376,6 +386,13 @@ unsigned long lastWifiCheckMs = 0;
 unsigned long msSincePubsub = 0;
 void loop()
 {
+  if (fallingStartMs != 0 && (millis() - fallingStartMs) >= AP_THRESHOLD_MS /* && digitalRead(INPUT_PIN) == HIGH */)
+  {
+    fallingStartMs = 0;
+    wifiAP();
+    return;
+  }
+
   // runs in AP_MODE too
   server.handleClient();
 
